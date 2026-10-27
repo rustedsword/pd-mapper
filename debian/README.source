@@ -1,0 +1,29 @@
+pd-mapper is packaged here as a native package for the gxr PPA
+(ppa:lightofmysoul/gxr). The debian_packaging branch is upstream
+linux-msm/pd-mapper plus exactly one commit, which adds debian/, the publish
+scripts and .gitignore; the upstream sources are not modified. To move to a
+newer upstream, rebase that commit onto the new upstream tag, add a changelog
+entry and amend it, so the branch keeps a single commit.
+
+The binary package keeps Ubuntu's name, protection-domain-mapper, so its
+version has to stay above the archive's 1.0-4ubuntu6. It ships the hardened
+pd-mapper.service from Ubuntu's package instead of the plain upstream unit.
+The Galaxy XR needs 1.1 or newer because only those versions read
+firmware_class.path, which is how pd-mapper finds the .jsn domain maps in
+/vendor/firmware_mnt/image.
+
+Launchpad versions must be unique. For subsequent PPA uploads, add a changelog
+entry and increment the +gxrN component. The changelog targets stonking with a
+~26.10.N suffix; publish.sh reuses that entry for every other supported series
+with its own ~XX.XX.N suffix.
+
+Publishing is performed in an Ubuntu 26.04 Podman container, so Debian package
+tools do not need to be installed on the host. Run ./publish.sh on a machine
+with the upload key to build, validate, sign, and upload the source packages.
+
+On a machine without the key, ./publish.sh --unsigned creates a validated
+unsigned source package beneath build-packages/. Transfer the complete artifact
+directory to the signing machine, then run:
+
+  debsign -kFINGERPRINT protection-domain-mapper_*_source.changes
+  dput ppa:lightofmysoul/gxr protection-domain-mapper_*_source.changes

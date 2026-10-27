@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	dh_auto_install -- prefix=/usr
+	# The hardened unit comes from debian/ instead.
+	$(RM) debian/protection-domain-mapper/usr/lib/systemd/system/pd-mapper.service
+
+override_dh_installsystemd:
+	dh_installsystemd --name=pd-mapper
