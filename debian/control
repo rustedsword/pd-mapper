@@ -1,0 +1,26 @@
+Source: protection-domain-mapper
+Section: misc
+Maintainer: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ liblzma-dev,
+ libqrtr-dev,
+Standards-Version: 4.7.4.0
+Homepage: https://github.com/linux-msm/pd-mapper
+Vcs-Git: https://github.com/rustedsword/pd-mapper.git -b debian_packaging
+Vcs-Browser: https://github.com/rustedsword/pd-mapper/tree/debian_packaging
+Rules-Requires-Root: no
+
+Package: protection-domain-mapper
+Architecture: arm64
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: Qualcomm Protection Domain mapper service
+ pd-mapper serves the Qualcomm servreg locator (QMI service 0x40) over QRTR.
+ It maps remote-processor services to the protection domains declared in JSON
+ (.jsn) files shipped next to the DSP firmware, so kernel PDR clients such as
+ the FastRPC sensors and audio PDs learn when those domains come up.
+ .
+ This is upstream 1.1, which also searches the firmware_class.path directory
+ used by the Galaxy XR direct-boot kernel.
