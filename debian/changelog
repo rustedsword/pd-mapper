@@ -1,3 +1,10 @@
+protection-domain-mapper (1.1+gxr2~26.10.1) stonking; urgency=medium
+
+  * Skip pd-mapper.service on kernels with their own pd-mapper (qcom_pd_mapper,
+    built in or a module): both would serve the domain lists.
+
+ -- Stanislav Aleksandrov <lightofmysoul@gmail.com>  Mon, 09 Nov 2026 12:01:24 +0000
+
 protection-domain-mapper (1.1+gxr1~26.10.1) stonking; urgency=medium
 
   * Package upstream 1.1 for the Galaxy XR gxr PPA.

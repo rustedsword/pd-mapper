@@ -21,6 +21,9 @@ RestrictSUIDSGID=yes
 SystemCallArchitectures=native
 SystemCallErrorNumber=EPERM
 SystemCallFilter=@system-service
+# Not needed with the kernel's own pd-mapper (qcom_pd_mapper, built in or a
+# module). + because ProtectKernelModules= hides /usr/lib/modules from modinfo.
+ExecCondition=+/bin/sh -c '! modinfo qcom_pd_mapper >/dev/null 2>&1'
 ExecStart=/usr/bin/pd-mapper
 Restart=always
 
